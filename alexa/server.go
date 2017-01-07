@@ -50,13 +50,13 @@ func (s *Server) HandleRequest(ctx *gin.Context) {
 				return
 			}
 			if s.Application.OnLaunch != nil {
-				if response, err := s.Application.OnLaunch(ctx, &req, &launchRequest); err != nil {
-					ctx.JSON(http.StatusOK, response)
+				response, err := s.Application.OnLaunch(ctx, &req, &launchRequest)
+				if err != nil {
+					ctx.JSON(http.StatusInternalServerError, gin.H{"status": "ServerError", "message": "Internal Server Error"})
 					return
 				}
-				ctx.JSON(http.StatusInternalServerError, gin.H{"status": "ServerError", "message": "Internal Server Error"})
+				ctx.JSON(http.StatusOK, response)
 				return
-
 			}
 		case "intentrequest":
 			var intentRequest entities.IntentRequest
@@ -65,11 +65,12 @@ func (s *Server) HandleRequest(ctx *gin.Context) {
 				return
 			}
 			if s.Application.OnIntent != nil {
-				if response, err := s.Application.OnIntent(ctx, &req, &intentRequest); err != nil {
-					ctx.JSON(http.StatusOK, response)
+				response, err := s.Application.OnIntent(ctx, &req, &intentRequest)
+				if err != nil {
+					ctx.JSON(http.StatusInternalServerError, gin.H{"status": "ServerError", "message": "Internal Server Error"})
 					return
 				}
-				ctx.JSON(http.StatusInternalServerError, gin.H{"status": "ServerError", "message": "Internal Server Error"})
+				ctx.JSON(http.StatusOK, response)
 				return
 
 			}
@@ -80,11 +81,12 @@ func (s *Server) HandleRequest(ctx *gin.Context) {
 				return
 			}
 			if s.Application.OnSessionEnded != nil {
-				if response, err := s.Application.OnSessionEnded(ctx, &req, &sessionEndedRequest); err != nil {
-					ctx.JSON(http.StatusOK, response)
+				response, err := s.Application.OnSessionEnded(ctx, &req, &sessionEndedRequest)
+				if err != nil {
+					ctx.JSON(http.StatusInternalServerError, gin.H{"status": "ServerError", "message": "Internal Server Error"})
 					return
 				}
-				ctx.JSON(http.StatusInternalServerError, gin.H{"status": "ServerError", "message": "Internal Server Error"})
+				ctx.JSON(http.StatusOK, response)
 				return
 
 			}
