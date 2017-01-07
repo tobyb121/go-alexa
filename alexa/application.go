@@ -8,14 +8,17 @@ import (
 type Application struct {
 	ApplicationID  string
 	VerifyRequests bool
-	OnLaunch       func(*gin.Context, entities.Request, entities.LaunchRequest)
-	OnIntent       func(*gin.Context, entities.Request, entities.IntentRequest)
-	OnSessionEnded func(*gin.Context, entities.Request, entities.SessionEndedRequest)
+	OnLaunch       func(*gin.Context, *entities.Request, *entities.LaunchRequest) (*entities.Response, error)
+	OnIntent       func(*gin.Context, *entities.Request, *entities.IntentRequest) (*entities.Response, error)
+	OnSessionEnded func(*gin.Context, *entities.Request, *entities.SessionEndedRequest) (*entities.Response, error)
 }
 
 func NewApplication(ApplicationID string) *Application {
 	return &Application{
 		ApplicationID:  ApplicationID,
 		VerifyRequests: true,
+		OnLaunch:       nil,
+		OnIntent:       nil,
+		OnSessionEnded: nil,
 	}
 }

@@ -40,8 +40,8 @@ var certStore = make(map[string]*x509.Certificate)
 
 const timestampTolerance = 150
 
-func (app *Application) VerifyRequest(ctx *gin.Context, req *entities.Request) error {
-	if app.VerifyRequests {
+func (s *Server) VerifyRequest(ctx *gin.Context, req *entities.Request) error {
+	if s.VerifyRequests {
 		if err := VerifyRequestSignature(ctx); err != nil {
 			return err
 		}
@@ -50,7 +50,7 @@ func (app *Application) VerifyRequest(ctx *gin.Context, req *entities.Request) e
 			return err
 		}
 
-		if err := app.VerifyRequestApplication(req); err != nil {
+		if err := s.VerifyRequestApplication(req); err != nil {
 			return err
 		}
 	}
@@ -230,9 +230,9 @@ func VerifyRequestTimestamp(req *entities.Request) error {
 	return nil
 }
 
-func (app *Application) VerifyRequestApplication(req *entities.Request) error {
+func (s *Server) VerifyRequestApplication(req *entities.Request) error {
 	appID := req.Session.Application.ApplicationID
-	if appID != app.ApplicationID {
+	if appID != s.Application.GetApplicationID() {
 		return errors.New("Request sent with invalid Application ID")
 	}
 	return nil
