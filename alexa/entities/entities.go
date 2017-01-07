@@ -16,23 +16,23 @@ type User struct {
 type Session struct {
 	New         bool                       `json:"new"`
 	SessionID   string                     `json:"sessionId"`
-	Application Application                `json:"application"`
+	Application *Application               `json:"application"`
 	Attributes  map[string]json.RawMessage `json:"attributes"`
-	User        User                       `json:"user"`
+	User        *User                      `json:"user"`
 }
 
 type System struct {
-	Application Application                `json:"application"`
-	User        User                       `json:"user"`
+	Application *Application               `json:"application"`
+	User        *User                      `json:"user"`
 	Device      map[string]json.RawMessage `json:"device"`
 }
 
 type Context struct {
 	New         bool                   `json:"new"`
 	SessionID   string                 `json:"sessionId"`
-	Application Application            `json:"application"`
+	Application *Application           `json:"application"`
 	Attributes  map[string]interface{} `json:"attributes"`
-	User        User                   `json:"user"`
+	User        *User                  `json:"user"`
 }
 
 type BaseRequest struct {
@@ -69,8 +69,8 @@ type SessionEndedRequest struct {
 
 type Request struct {
 	Version string          `json:"version"`
-	Session Session         `json:"session"`
-	Context Context         `json:"context"`
+	Session *Session        `json:"session"`
+	Context *Context        `json:"context"`
 	Request json.RawMessage `json:"request"`
 }
 
@@ -99,9 +99,9 @@ type Response struct {
 	Version           string            `json:"version,omitempty"`
 	SessionAttributes map[string]string `json:"sessionAttributes,omitempty"`
 	Response          struct {
-		OutputSpeech OutputSpeech `json:"outputSpeech,omitempty"`
-		Card         Card         `json:"card,omitempty"`
-		Reprompt     struct {
+		OutputSpeech *OutputSpeech `json:"outputSpeech,omitempty"`
+		Card         *Card         `json:"card,omitempty"`
+		Reprompt     *struct {
 			OutputSpeech OutputSpeech `json:"outputSpeech,omitempty"`
 		} `json:"reprompt,omitempty"`
 		Directives []Directive `json:"directives,omitempty"`
