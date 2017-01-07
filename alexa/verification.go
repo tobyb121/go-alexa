@@ -232,7 +232,7 @@ func VerifyRequestTimestamp(req *entities.Request) error {
 
 func (s *Server) VerifyRequestApplication(req *entities.Request) error {
 	appID := req.Session.Application.ApplicationID
-	if appID != s.Application.GetApplicationID() {
+	if appID != s.Application.ApplicationID {
 		return errors.New("Request sent with invalid Application ID")
 	}
 	return nil

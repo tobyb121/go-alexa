@@ -14,7 +14,7 @@ import (
 )
 
 type Server struct {
-	Application    Application
+	Application    *Application
 	VerifyRequests bool
 }
 
